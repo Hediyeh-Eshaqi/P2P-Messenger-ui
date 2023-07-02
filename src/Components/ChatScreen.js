@@ -33,6 +33,12 @@ export default class ChatScreen extends Component {
             this.onMessageSend(tosend);
         }
       }
+    onButtonClick(){
+        var tosend = {
+            "text":this.state.text
+        }
+        this.onMessageSend(tosend);
+    }
     onMessageSend = async (tosend) => {
         await axios
             .post("http://127.0.0.1:8000/send/", tosend)

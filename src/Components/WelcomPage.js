@@ -8,7 +8,7 @@ export default class WelcomPage extends Component {
             <div>
                 <img src={pic1} className="App-logo" alt="logo" />
                 <p>
-                    Welcom to p2p-messenger!
+                    Welcome to p2p-messenger!
                 </p>
                 <Link className="App-link" to={"/set_att"}>Start New Conversation</Link>
                 
