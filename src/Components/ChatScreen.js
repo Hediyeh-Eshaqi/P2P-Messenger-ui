@@ -4,45 +4,74 @@ import { MessageList } from "react-chat-elements"
 import { Input } from 'react-chat-elements'
 import { SystemMessage } from "react-chat-elements"
 import { Button } from 'react-chat-elements'
-
+import axios from 'axios'
 export default class ChatScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
             text:"",
             dataSource: [
-                {
-                    position: "left",
-                    type: "text",
-                    title: "You",
-                    text: "Give me a message list example !",
-                },
-                {
-                    position: "right",
-                    type: "text",
-                    title: "Me",
-                    text: "That's all.",
-                },
+                
             ]
         }
     }
+    componentDidMount(){
+        this.getMessages();
+        this.interval = setInterval(() => this.getMessages(), 1000);
+        // this.interval = setInterval(() => this.getMessages(), 10);
+    }
+
+    componentWillUnmount(){
+        clearInterval(this.interval)
+      }
+
     _handleKeyDown = (e) => {
         if (e.key === 'Enter') {
-            this.onMessageSend();
+            var tosend = {
+                "text":this.state.text
+            }
+            this.onMessageSend(tosend);
         }
       }
-    onMessageSend() {
-        var lastdta = this.state.dataSource;
-        if (this.state.text != "") {
-            lastdta.push({
-                position: "right",
-                type: "text",
-                title: "Me",
-                text: this.state.text,
+    onMessageSend = async (tosend) => {
+        await axios
+            .post("http://127.0.0.1:8000/send/", tosend)
+            .then((response) => {
+                console.log(response);
+                this.setState({text:""})
+                // window.location.reload()
+                // window.location.replace("/chat");
             })
-            this.setState({ dataSource: lastdta, text:"" })
-        }
+            .catch((error) => {
+                console.log(error);
+            },)
     }
+    onSendClick(){
+        
+        var tosend = {
+            "text":this.state.text
+        }
+        this.onMessageSend(tosend);
+    }
+    
+
+    getMessages = async () => {
+        await axios
+            .get("http://127.0.0.1:8000/messages")
+            .then((response) => {
+                console.log(response);
+                if (this.state.dataSource!=response.data) {
+                    this.setState({dataSource:response.data})
+                }
+                
+            })
+            .catch((error) => {
+                console.log(error);
+            },)
+    }
+
+    
+
     render() {
         return (
             <div className='container-fluid box'>
