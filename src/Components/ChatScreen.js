@@ -125,7 +125,7 @@ export default class ChatScreen extends Component {
                                 />
                             </div>
                             <div className='d-flex align-items-center' style={{ width: "8%" }}>
-                                <Button text={"Send"} backgroundColor='#364e7f' onClick={() => this.onMessageSend()} title="Send" />
+                                <Button text={"Send"} backgroundColor='#364e7f' onClick={() => this.onButtonClick()} title="Send" />
                             </div>
                         </div>
                     </div>
