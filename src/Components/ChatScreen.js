@@ -18,7 +18,6 @@ export default class ChatScreen extends Component {
     componentDidMount(){
         this.getMessages();
         this.interval = setInterval(() => this.getMessages(), 1000);
-        // this.interval = setInterval(() => this.getMessages(), 10);
     }
 
     componentWillUnmount(){
@@ -45,8 +44,6 @@ export default class ChatScreen extends Component {
             .then((response) => {
                 console.log(response);
                 this.setState({text:""})
-                // window.location.reload()
-                // window.location.replace("/chat");
             })
             .catch((error) => {
                 console.log(error);

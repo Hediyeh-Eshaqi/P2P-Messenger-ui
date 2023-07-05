@@ -33,7 +33,7 @@ export default class SetAtt extends Component {
             .post("http://127.0.0.1:8000/set_att/", tosend)
             .then((response) => {
                 console.log(response);
-                // window.location.replace("/chat");
+                window.location.replace("/chat");
             })
             .catch((error) => {
                 window.alert("please try again!")
